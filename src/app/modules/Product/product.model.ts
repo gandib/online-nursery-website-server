@@ -10,4 +10,10 @@ const productSchema = new Schema<TProduct>({
   isDeleted: { type: Boolean, default: false },
 });
 
+// deleted product not sent to client
+productSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
 export const Product = model<TProduct>('Product', productSchema);

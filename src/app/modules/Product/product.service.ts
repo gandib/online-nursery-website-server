@@ -37,7 +37,33 @@ const getAllProducts = async (query: Record<string, unknown>) => {
   };
 };
 
+const getSingleProduct = async (id: string) => {
+  const result = await Product.findById(id).populate('category');
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Product not found!');
+  }
+
+  return result;
+};
+
+const deleteProduct = async (id: string) => {
+  const result = await Product.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  );
+  return result;
+};
+
+const updateProduct = async (id: string, payload: TProduct) => {
+  const result = await Product.findByIdAndUpdate(id, payload, { new: true });
+  return result;
+};
+
 export const productServices = {
   createProduct,
   getAllProducts,
+  getSingleProduct,
+  deleteProduct,
+  updateProduct,
 };
