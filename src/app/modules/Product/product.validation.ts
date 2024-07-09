@@ -8,7 +8,6 @@ const createProductValidationSchema = z.object({
     price: z.number({ required_error: 'Price is required!' }),
     rating: z.number({ required_error: 'Rating is required!' }),
     image: z.string({ required_error: 'Image is required!' }),
-    brand: z.string({ required_error: 'Brand is required!' }),
     quantity: z.number({ required_error: 'Quantity is required!' }),
   }),
 });
@@ -21,7 +20,6 @@ const updateProductValidationSchema = z.object({
     price: z.number().optional(),
     rating: z.number().optional(),
     image: z.string().optional(),
-    brand: z.string().optional(),
     quantity: z.number().optional(),
   }),
 });
