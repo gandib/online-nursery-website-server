@@ -43,14 +43,16 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   } else if (error instanceof AppError) {
-    return res.status(statusCode).json({
-      success: false,
-      statusCode: error?.statusCode,
-      message: error?.message,
-      data: [],
-    });
+    statusCode = error?.statusCode;
+    message = error?.message;
+    errorMessages = [
+      {
+        path: '',
+        message: error?.message,
+      },
+    ];
   } else if (error instanceof AuthError) {
-    return res.status(statusCode).json({
+    res.status(statusCode).json({
       success: false,
       statusCode: error?.statusCode,
       message: error?.message,
