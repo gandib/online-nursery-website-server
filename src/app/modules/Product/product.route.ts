@@ -11,6 +11,8 @@ router.post(
   productControllers.createProduct,
 );
 
+router.get('/categories', productControllers.getAllCategories);
+
 router.get('/', productControllers.getAllProducts);
 
 router.get('/:id', productControllers.getSingleProduct);

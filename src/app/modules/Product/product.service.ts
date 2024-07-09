@@ -38,7 +38,7 @@ const getAllProducts = async (query: Record<string, unknown>) => {
 };
 
 const getSingleProduct = async (id: string) => {
-  const result = await Product.findById(id).populate('category');
+  const result = await Product.findById(id);
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'Product not found!');
   }
@@ -60,10 +60,21 @@ const updateProduct = async (id: string, payload: TProduct) => {
   return result;
 };
 
+const getAllCategories = async () => {
+  const result = await Product.aggregate([
+    {
+      $group: { _id: null, categories: { $addToSet: '$category' } },
+    },
+  ]);
+
+  return result;
+};
+
 export const productServices = {
   createProduct,
   getAllProducts,
   getSingleProduct,
   deleteProduct,
   updateProduct,
+  getAllCategories,
 };

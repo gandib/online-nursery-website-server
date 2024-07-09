@@ -62,10 +62,22 @@ const updateProduct = catchAsync(async (req, res) => {
   });
 });
 
+const getAllCategories = catchAsync(async (req, res) => {
+  const result = await productServices.getAllCategories();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Categories are retrieved successfully',
+    data: result,
+  });
+});
+
 export const productControllers = {
   createProduct,
   getAllProducts,
   getSingleProduct,
   deleteProduct,
   updateProduct,
+  getAllCategories,
 };
