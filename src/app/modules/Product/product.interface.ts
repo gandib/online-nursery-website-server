@@ -1,8 +1,6 @@
-import { Types } from 'mongoose';
-
 export type TProduct = {
   title: string;
-  category: Types.ObjectId;
+  category: string;
   description: string;
   price: number;
   rating: number;
