@@ -18,4 +18,9 @@ productSchema.pre('find', function (next) {
   next();
 });
 
+productSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
+
 export const Product = model<TProduct>('Product', productSchema);
