@@ -11,7 +11,10 @@ const createProduct = async (payload: TProduct) => {
 };
 
 const getAllProducts = async (query: Record<string, unknown>) => {
-  const productQuery = new QueryBuilder(Product.find(), query)
+  const productQuery = new QueryBuilder(
+    Product.find().populate('category'),
+    query,
+  )
     .search(productSearchableFields)
     .filter()
     .sort()
@@ -28,7 +31,7 @@ const getAllProducts = async (query: Record<string, unknown>) => {
 };
 
 const getSingleProduct = async (id: string) => {
-  const result = await Product.findById(id);
+  const result = await Product.findById(id).populate('category');
   if (!result) {
     throw new AppError(httpStatus.NOT_FOUND, 'Product not found!');
   }
